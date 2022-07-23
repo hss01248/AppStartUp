@@ -1,0 +1,7 @@
+include ':startup-api'
+include ':startup-tasks'
+include ':app'
+include ':startup-annotation'
+include ':startup-compile'
+rootProject.name = "AppStartUpDemo"
+include ':testlib'

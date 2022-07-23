@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hss01248.appstartup.api">
+    <application>
+        <provider
+            android:name="com.hss01248.appstartup.api.AppStartContentProvider"
+            android:authorities="${applicationId}.AppStartContentProvider"
+            android:exported="false"
+            android:initOrder="103" />
+        <provider
+            android:name="com.hss01248.appstartup.api.AppStartContentProviderLast"
+            android:authorities="${applicationId}.AppStartContentProviderLast"
+            android:exported="false"
+            android:initOrder="-1" />
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.hss01248.appstartup.api.AndroidXStartUpWrapper"
+                android:value="androidx.startup" />
+        </provider>
+    </application>
+</manifest>

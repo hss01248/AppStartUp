@@ -1,0 +1,3 @@
+-keep class com.hss01248.appstartup.api.** { *; }
+-keep class com.hss01248.startup.annotation.AppStartUpItem { *; }
+-keep @com.hss01248.startup.annotation.AppStartUpItem class * {*;}
