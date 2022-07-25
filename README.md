@@ -56,10 +56,17 @@ public interface AppStartUpCallback {
 
 # 使用方式:
 
+[![](https://jitpack.io/v/hss01248/AppStartUp.svg)](https://jitpack.io/#hss01248/AppStartUp)
+
 ```groovy
-api project(":startup-api")
-annotationProcessor project(":startup-compile")
-//稍后改成远程
+//api project(":startup-api")
+//annotationProcessor project(":startup-compile")
+
+api "com.github.hss01248.AppStartUp:startup-api:1.0.0"
+annotationProcessor "com.github.hss01248.AppStartUp:startup-compile:1.0.0"
+
+//application oncreate的有向无环图启动
+api "com.github.hss01248.AppStartUp:startup-tasks:1.0.0"
 ```
 
 
@@ -104,6 +111,27 @@ public class MyStartup3 implements AppStartUpCallback {
 将文件名反射拿到class,创建对象,加入到AppStartUpCallback的list, 后续各阶段的初始从这个list里取对象调用即可.
 
 
+
+### 获取module路径的代码:
+
+```java
+     try {
+                final FileObject fo = processingEnv.getFiler().createResource(StandardLocation.CLASS_OUTPUT, "", name.toString());
+                String temFilePath = fo.toUri().getPath();
+                System.out.println("--------->AppStartUpItem:  temFilePath " + temFilePath);
+                ///Users/hss/github2/AppStartUpDemo/testlib/build/intermediates/javac/debug/classes/com.hss01248.startup.testlib.MyStartup3
+                String outputPath = temFilePath.substring(0, temFilePath.indexOf("build/intermediates/"));
+                outputPath = outputPath + "src/main/assets/startupclasses/";
+                System.out.println("--------->AppStartUpItem:  outputPath " + outputPath);
+                File dir = new File(outputPath);
+                dir.mkdirs();
+                File target = new File(dir,name.toString());
+                System.out.println("--------->AppStartUpItem:  target " + target.getAbsolutePath());
+                target.createNewFile();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+```
 
 
 
