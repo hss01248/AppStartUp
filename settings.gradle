@@ -5,3 +5,4 @@ include ':startup-annotation'
 include ':startup-compile'
 rootProject.name = "AppStartUpDemo"
 include ':testlib'
+include ':test-kotlin'

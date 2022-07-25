@@ -62,16 +62,16 @@ public interface AppStartUpCallback {
 //api project(":startup-api")
 //annotationProcessor project(":startup-compile")
 
-api "com.github.hss01248.AppStartUp:startup-api:1.0.0"
-annotationProcessor "com.github.hss01248.AppStartUp:startup-compile:1.0.0"
+api "com.github.hss01248.AppStartUp:startup-api:1.0.3"
+annotationProcessor "com.github.hss01248.AppStartUp:startup-compile:1.0.3"
 
-//application oncreate的有向无环图启动
-api "com.github.hss01248.AppStartUp:startup-tasks:1.0.0"
+//额外功能: application oncreate的有向无环图启动
+api "com.github.hss01248.AppStartUp:startup-tasks:1.0.3"
 ```
 
 
 
-//java代码里加注解,实现任一初始化回调
+//java/kotlin代码里加注解,实现任一初始化回调
 
 ```java
 @AppStartUpItem
@@ -115,22 +115,18 @@ public class MyStartup3 implements AppStartUpCallback {
 ### 获取module路径的代码:
 
 ```java
-     try {
-                final FileObject fo = processingEnv.getFiler().createResource(StandardLocation.CLASS_OUTPUT, "", name.toString());
+       final FileObject fo = processingEnv.getFiler().createResource(StandardLocation.CLASS_OUTPUT, "", name.toString());
                 String temFilePath = fo.toUri().getPath();
                 System.out.println("--------->AppStartUpItem:  temFilePath " + temFilePath);
-                ///Users/hss/github2/AppStartUpDemo/testlib/build/intermediates/javac/debug/classes/com.hss01248.startup.testlib.MyStartup3
-                String outputPath = temFilePath.substring(0, temFilePath.indexOf("build/intermediates/"));
-                outputPath = outputPath + "src/main/assets/startupclasses/";
-                System.out.println("--------->AppStartUpItem:  outputPath " + outputPath);
-                File dir = new File(outputPath);
-                dir.mkdirs();
-                File target = new File(dir,name.toString());
-                System.out.println("--------->AppStartUpItem:  target " + target.getAbsolutePath());
-                target.createNewFile();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                //java apt
+//Users/hss/github2/AppStartUpDemo/testlib/build/intermediates/javac/debug/classes/xxx
+                //kotlin apt
+//Users/hss/aku/module-offline-pay/Module-Offline-Pay/build/tmp/kapt3/classes/debug/xxx
+                int idx = temFilePath.indexOf("/build/intermediates/");
+                if(idx < 0){
+                    idx = temFilePath.indexOf("/build/tmp/");
+                }
+                String outputPath = temFilePath.substring(0, idx);
 ```
 
 
