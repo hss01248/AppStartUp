@@ -2,6 +2,14 @@
 buildscript {
     apply from: 'https://raw.githubusercontent.com/hss01248/flipperUtil/master/deps/depsLastestChecker.gradle'
     apply from: 'https://raw.githubusercontent.com/hss01248/flipperUtil/dev/remote3.gradle'
+
+    apply from: 'https://raw.githubusercontent.com/hss01248/flipperUtil/master/deps/uploadAllTask.gradle'
+    ext {
+// 快照版需要在版本号后面加-SNAPSHOT
+        groupId='com.github.hss01248.AppStartUp'
+        versionCode = '1.0.1.local'
+        isPublisToLocal=true
+    }
     repositories {
         google()
         jcenter()

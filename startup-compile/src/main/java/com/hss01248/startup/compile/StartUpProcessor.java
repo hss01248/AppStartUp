@@ -72,8 +72,15 @@ public class StartUpProcessor extends AbstractProcessor {
                 final FileObject fo = processingEnv.getFiler().createResource(StandardLocation.CLASS_OUTPUT, "", name.toString());
                 String temFilePath = fo.toUri().getPath();
                 System.out.println("--------->AppStartUpItem:  temFilePath " + temFilePath);
+                //java apt
                 ///Users/hss/github2/AppStartUpDemo/testlib/build/intermediates/javac/debug/classes/com.hss01248.startup.testlib.MyStartup3
-                String outputPath = temFilePath.substring(0, temFilePath.indexOf("build/intermediates/"));
+                //kotlin apt
+                ///Users/hss/aku/module-offline-pay/Module-Offline-Pay/build/tmp/kapt3/classes/debug/
+                int idx = temFilePath.indexOf("/build/intermediates/");
+                if(idx < 0){
+                    idx = temFilePath.indexOf("/build/tmp/");
+                }
+                String outputPath = temFilePath.substring(0, idx);
                 outputPath = outputPath + "src/main/assets/startupclasses/";
                 System.out.println("--------->AppStartUpItem:  outputPath " + outputPath);
                 File dir = new File(outputPath);
