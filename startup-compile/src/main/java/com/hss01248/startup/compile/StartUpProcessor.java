@@ -81,7 +81,7 @@ public class StartUpProcessor extends AbstractProcessor {
                     idx = temFilePath.indexOf("/build/tmp/");
                 }
                 String outputPath = temFilePath.substring(0, idx);
-                outputPath = outputPath + "src/main/assets/startupclasses/";
+                outputPath = outputPath + "/src/main/assets/startupclasses/";
                 System.out.println("--------->AppStartUpItem:  outputPath " + outputPath);
                 File dir = new File(outputPath);
                 dir.mkdirs();
