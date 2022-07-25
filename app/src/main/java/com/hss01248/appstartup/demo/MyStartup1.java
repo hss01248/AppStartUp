@@ -3,6 +3,9 @@ package com.hss01248.appstartup.demo;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
+import android.util.Printer;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.hss01248.appstartup.api.AppStartUpCallback;
@@ -20,6 +23,7 @@ public class MyStartup1 implements AppStartUpCallback {
     @Override
     public void onFirstProviderInit(Application app) {
         LogUtils.d("onFirstProviderInit",app);
+        Looper.getMainLooper().setMessageLogging(new BlockPrinter());
     }
 
     @Override
