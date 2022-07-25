@@ -1,7 +1,8 @@
 package com.hss01248.appstartup.demo;
 
-import android.app.Application;
 import android.content.Context;
+
+import androidx.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
@@ -12,7 +13,7 @@ import com.blankj.utilcode.util.Utils;
  * @Date 23/07/2022 15:01
  * @Version 1.0
  */
-public class BaseApp extends Application {
+public class BaseApp extends MultiDexApplication {
 
     //ActivityThread: Attach thread to application
     //ActivityThread: Init compatible state: true

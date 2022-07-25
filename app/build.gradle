@@ -12,6 +12,7 @@ android {
         targetSdkVersion 32
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,4 +41,8 @@ dependencies {
     implementation project(":startup-annotation")
     annotationProcessor project(":startup-compile")
     implementation project(":testlib")
+    //扫描jvm中某个接口的所有实现类；扫描某个类的所有子类。
+     api 'org.reflections:reflections:0.10.2'
+
+
 }

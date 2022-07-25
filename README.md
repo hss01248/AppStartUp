@@ -85,6 +85,28 @@ public class MyStartup3 implements AppStartUpCallback {
 
 
 
+# 原理
+
+> 仅依赖于注解处理器,不需要asm,gradle plugin
+
+通过注解找到AppStartUpCallback的实现类的类名
+
+然后将类名作为文件名写到当前module的src/main/assets/startupclasses/目录下,比如:
+
+```
+/Users/hss/github2/AppStartUpDemo/app/src/main/assets/startupclasses/com.hss01248.appstartup.demo.MyStartup2
+```
+
+这个空文件会随着打包带到最终apk中
+
+那么在app启动的最开始,去assets/startupclasses/目录下读取文件列表
+
+将文件名反射拿到class,创建对象,加入到AppStartUpCallback的list, 后续各阶段的初始从这个list里取对象调用即可.
+
+
+
+
+
 
 
 # todo: 使用注解处理器实现依赖注入功能-findbyType

@@ -40,6 +40,12 @@ public class ClassCodeGen {
         strings.add("xxxxx");
         return strings;
     }
+
+    static void  addCallbackName(String className){
+
+        return ;
+    }
+
     private static String generateMethodCode(List<String> classNames) {
         StringBuilder code = new StringBuilder();
         code.append("ArrayList<String> strings = new ArrayList<>();\n");

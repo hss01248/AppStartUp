@@ -1,12 +1,14 @@
 package com.hss01248.appstartup.api;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.blankj.utilcode.util.ReflectUtils;
 import com.blankj.utilcode.util.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,10 +22,33 @@ import java.util.List;
  */
 public class AppStartUpUtil {
 
-    public static void add(String clazzName){
-
+    public static void add(AppStartUpCallback callback){
+        callbacks.add(callback);
     }
-
+    static void fillCallbacks2(Context context){
+        try {
+            String[] startupclasses = context.getAssets().list("startupclasses");
+            if(startupclasses != null && startupclasses.length >0){
+                for (String startupclass : startupclasses) {
+                    try {
+                        Class clazz = Class.forName(startupclass);
+                        Object o = clazz.newInstance();
+                        if(o instanceof AppStartUpCallback){
+                            callbacks.add((AppStartUpCallback) o);
+                        }else {
+                            Log.w("startup",startupclass +" not instanceof AppStartUpCallback");
+                        }
+                    }catch (Throwable throwable){
+                        throwable.printStackTrace();
+                    }
+                }
+            }else {
+                Log.i("startup","not start up classes in assets/startupclasses");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     static void fillCallbacks(){
         String name = "com.hss01248.appstartup.api.AppStartUpItems";
@@ -58,6 +83,9 @@ public class AppStartUpUtil {
     }
 
     static List<AppStartUpCallback> callbacks = new ArrayList<>();
+    static {
+        callbacks.add(new FilledCallbacks());
+    }
 
     static void onFirstProviderInit(){
         if(callbacks == null || callbacks.isEmpty()){

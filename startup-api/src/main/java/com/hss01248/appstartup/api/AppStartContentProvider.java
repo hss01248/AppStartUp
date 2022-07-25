@@ -52,8 +52,8 @@ public class AppStartContentProvider extends ContentProvider {
     }
 
     private void init2() {
+        AppStartUpUtil.fillCallbacks2(getContext());
         if (ProcessUtils.isMainProcess()) {
-            AppStartUpUtil.fillCallbacks();
             Utils.getApp().registerActivityLifecycleCallbacks(new FirstActivityCreatedCallback());
             AppStartUpUtil.onFirstProviderInit();
         }

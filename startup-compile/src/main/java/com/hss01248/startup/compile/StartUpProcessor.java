@@ -5,6 +5,7 @@ import com.hss01248.startup.annotation.AppStartUpItem;
 import com.squareup.javapoet.JavaFile;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -20,6 +21,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
+import javax.tools.FileObject;
+import javax.tools.StandardLocation;
 
 /**
  * @Despciption todo
@@ -35,6 +38,7 @@ public class StartUpProcessor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         elementUtils = processingEnv.getElementUtils();
+        //System.out.println("--------->AppStartUpItem elementUtils:  " + processingEnv.getFiler().toString());
     }
 
     @Override
@@ -61,22 +65,29 @@ public class StartUpProcessor extends AbstractProcessor {
         for (Element element : elements) {
             TypeElement typeElement = (TypeElement) element;
             Name name = typeElement.getQualifiedName();
-            //System.out.println("--------->AppStartUpItem:  "+ name);
-            System.out.println("--------->AppStartUpItem:  " + typeElement);
+            System.out.println("--------->AppStartUpItem:  classname " + typeElement);
             classNames.add(name.toString());
-        }
-        //或者把字符串写到文件中?
 
-
-        String className = getName();
-        JavaFile javaFile = JavaFile
-                .builder("com.hss01248.appstartup.api", ClassCodeGen.generateJavaCode(classNames,className))
-                .build();
-        try {
-            javaFile.writeTo(processingEnv.getFiler());
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                final FileObject fo = processingEnv.getFiler().createResource(StandardLocation.CLASS_OUTPUT, "", name.toString());
+                String temFilePath = fo.toUri().getPath();
+                System.out.println("--------->AppStartUpItem:  temFilePath " + temFilePath);
+                ///Users/hss/github2/AppStartUpDemo/testlib/build/intermediates/javac/debug/classes/com.hss01248.startup.testlib.MyStartup3
+                String outputPath = temFilePath.substring(0, temFilePath.indexOf("build/intermediates/"));
+                outputPath = outputPath + "src/main/assets/startupclasses/";
+                System.out.println("--------->AppStartUpItem:  outputPath " + outputPath);
+                File dir = new File(outputPath);
+                dir.mkdirs();
+                File target = new File(dir,name.toString());
+                System.out.println("--------->AppStartUpItem:  target " + target.getAbsolutePath());
+                target.createNewFile();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        //或者把字符串写到propertis文件中,放到本模块的main/assets/startup/目录下
+        //然后启动时解析出assets/startup/目录下所有配置
+        //https://blog.csdn.net/haizishiwo/article/details/75213053
         return true;
     }
 
