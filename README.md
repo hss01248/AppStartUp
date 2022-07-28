@@ -66,6 +66,7 @@ api "com.github.hss01248.AppStartUp:startup-api:1.0.3"
 annotationProcessor "com.github.hss01248.AppStartUp:startup-compile:1.0.3"
 
 //额外功能: application oncreate的有向无环图启动
+//https://github.com/aiceking/AppStartFaster
 api "com.github.hss01248.AppStartUp:startup-tasks:1.0.3"
 ```
 
