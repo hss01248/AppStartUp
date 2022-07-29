@@ -132,6 +132,8 @@ public class MyStartup3 implements AppStartUpCallback {
 
 
 
+# content provider与多进程
 
+https://blog.csdn.net/wangbaochu/article/details/52042926
 
 # todo: 使用注解处理器实现依赖注入功能-findbyType

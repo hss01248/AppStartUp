@@ -1,12 +1,15 @@
 package com.hss01248.appstartup.api;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.blankj.utilcode.util.ReflectUtils;
 import com.blankj.utilcode.util.Utils;
+import com.hss01248.app.startup.oncreate.StartTask;
+import com.hss01248.app.startup.oncreate.TaskDispatcher;
+import com.hss01248.app.startup.oncreate.utils.DispatcherLog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,9 +25,71 @@ import java.util.List;
  */
 public class AppStartUpUtil {
 
+
+    /**
+     * 需要用户主动调用, 或者使用字节码注入.
+     * @param application
+     * @param showLog
+     */
+    public static void onApplicationOnCreate(Application application,boolean showLog){
+        if(application == null){
+            application = Utils.getApp();
+        }
+        TaskDispatcher.init(application);
+        DispatcherLog.setDebug(showLog);
+        TaskDispatcher taskDispatcher = TaskDispatcher.createInstance();
+        addTasksToDispatcher(taskDispatcher,application);
+        taskDispatcher.start();
+        taskDispatcher.await();
+
+        afterTask(application);
+    }
+    static List<StartTask> tasks = new ArrayList<>();
+
+    public static void addStartTaskToApplicationOnCreate(StartTask startTask){
+        tasks.add(startTask);
+    }
+
     public static void add(AppStartUpCallback callback){
         callbacks.add(callback);
     }
+
+    private static void afterTask(Application application) {
+        if(callbacks == null || callbacks.isEmpty()){
+            Log.v("start","callbacks is empty--onFirstProviderInit");
+            return;
+        }
+        List<AppStartUpCallback> callbackList = new ArrayList<>(callbacks);
+        Collections.sort(callbackList, new Comparator<AppStartUpCallback>() {
+            @Override
+            public int compare(AppStartUpCallback o1, AppStartUpCallback o2) {
+                return o2.orderOfAfterApplicationOnCreateTaskFinished() - o1.orderOfAfterApplicationOnCreateTaskFinished();
+            }
+        });
+        for (AppStartUpCallback callback : callbackList) {
+            callback.onAfterApplicationOnCreateTaskFinished(application);
+        }
+    }
+
+    private static void addTasksToDispatcher(TaskDispatcher taskDispatcher, Application application) {
+        if(callbacks == null || callbacks.isEmpty()){
+            Log.v("start","callbacks is empty--onFirstProviderInit");
+            return;
+        }
+        List<AppStartUpCallback> callbackList = new ArrayList<>(callbacks);
+        for (AppStartUpCallback appStartUpCallback : callbackList) {
+            StartTask task = appStartUpCallback.getApplicationOnCreateTask(application);
+            if(task != null){
+                taskDispatcher.addTask(task);
+            }
+        }
+        for (StartTask task : tasks) {
+            if(task != null){
+                taskDispatcher.addTask(task);
+            }
+        }
+    }
+
     static void fillCallbacks2(Context context){
         try {
             String[] startupclasses = context.getAssets().list("startupclasses");
@@ -47,38 +112,6 @@ public class AppStartUpUtil {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    static void fillCallbacks(){
-        String name = "com.hss01248.appstartup.api.AppStartUpItems";
-        try {
-            Object names = ReflectUtils.reflect(name)
-                    .method("callbackClassNames").get();
-            if(names instanceof List){
-                List list = (List) names;
-                callbacks.clear();
-                for (Object o : list) {
-                    if(o instanceof String){
-                        String str = (String) o;
-                        try {
-                            Class clazz = Class.forName(str);
-                            Object o1 = clazz.newInstance();
-                            if(o1 instanceof AppStartUpCallback){
-                                callbacks.add((AppStartUpCallback) o1);
-                            }else {
-                                Log.w("start","not AppStartUpCallback: "+ o1);
-                            }
-                        }catch (Throwable throwable){
-                            throwable.printStackTrace();
-                        }
-                    }else {
-                        Log.w("start","not string: "+ o);
-                    }
-                }
-            }
-        }catch (Throwable throwable){
-            throwable.printStackTrace();
         }
     }
 

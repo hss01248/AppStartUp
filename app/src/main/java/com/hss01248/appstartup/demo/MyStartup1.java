@@ -8,6 +8,7 @@ import android.util.Log;
 import android.util.Printer;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ProcessUtils;
 import com.hss01248.appstartup.api.AppStartUpCallback;
 import com.hss01248.startup.annotation.AppStartUpItem;
 
@@ -22,22 +23,23 @@ public class MyStartup1 implements AppStartUpCallback {
 
     @Override
     public void onFirstProviderInit(Application app) {
-        LogUtils.d("onFirstProviderInit",app);
-        Looper.getMainLooper().setMessageLogging(new BlockPrinter());
+        LogUtils.d("onFirstProviderInit",app, ProcessUtils.getCurrentProcessName());
+        //Looper.getMainLooper().setMessageLogging(new BlockPrinter());
     }
 
     @Override
     public void onBeforeApplicationOnCreate(Application app) {
-        LogUtils.d("onBeforeApplicationOnCreate",app);
+        LogUtils.d("onBeforeApplicationOnCreate",app, ProcessUtils.getCurrentProcessName());
     }
+
 
     @Override
     public void onFirstActivityCreated(Application app, Activity activity, Bundle savedInstanceState) {
-        LogUtils.d("onFirstActivityCreated",app,activity,savedInstanceState);
+        LogUtils.d("onFirstActivityCreated",app,activity,savedInstanceState, ProcessUtils.getCurrentProcessName());
     }
 
     @Override
     public void onAndroidXStartUpInit(Application app) {
-        LogUtils.d("onAndroidXStartUpInit",app);
+        LogUtils.d("onAndroidXStartUpInit",app, ProcessUtils.getCurrentProcessName());
     }
 }

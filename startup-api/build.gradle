@@ -36,6 +36,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     api project(":startup-annotation")
+    api project(":startup-tasks")
     api "com.blankj:utilcodex:1.30.0"
     api "androidx.startup:startup-runtime:1.1.0"
 }

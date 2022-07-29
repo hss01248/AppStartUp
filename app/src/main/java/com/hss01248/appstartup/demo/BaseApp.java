@@ -5,7 +5,9 @@ import android.content.Context;
 import androidx.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ProcessUtils;
 import com.blankj.utilcode.util.Utils;
+import com.hss01248.appstartup.api.AppStartUpUtil;
 
 /**
  * @Despciption todo
@@ -24,13 +26,15 @@ public class BaseApp extends MultiDexApplication {
         //https://www.twblogs.net/a/60589e89e6ac4ca98fa8a0e0
         super.attachBaseContext(base);
         Utils.init(this);
-        LogUtils.i("attachBaseContext",base);
+        LogUtils.i("attachBaseContext",base, ProcessUtils.getCurrentProcessName());
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        LogUtils.i("onCreate",this);
+        LogUtils.i("onCreate",this, ProcessUtils.getCurrentProcessName());
+        AppStartUpUtil.addStartTaskToApplicationOnCreate(null);
+        AppStartUpUtil.onApplicationOnCreate(this,BuildConfig.DEBUG);
     }
 
     //ActivityThread: finishPreloaded preloadStatus 0
