@@ -6,3 +6,4 @@ include ':startup-compile'
 rootProject.name = "AppStartUpDemo"
 include ':testlib'
 include ':test-kotlin'
+include ':loginStatus'

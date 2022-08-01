@@ -72,22 +72,28 @@ public class AppStartUpUtil {
     }
 
     private static void addTasksToDispatcher(TaskDispatcher taskDispatcher, Application application) {
-        if(callbacks == null || callbacks.isEmpty()){
+        if(callbacks != null && !callbacks.isEmpty()){
+            List<AppStartUpCallback> callbackList = new ArrayList<>(callbacks);
+            for (AppStartUpCallback appStartUpCallback : callbackList) {
+                StartTask task = appStartUpCallback.getApplicationOnCreateTask(application);
+                if(task != null){
+                    taskDispatcher.addTask(task);
+                }
+            }
+        }else {
             Log.v("start","callbacks is empty--onFirstProviderInit");
-            return;
         }
-        List<AppStartUpCallback> callbackList = new ArrayList<>(callbacks);
-        for (AppStartUpCallback appStartUpCallback : callbackList) {
-            StartTask task = appStartUpCallback.getApplicationOnCreateTask(application);
-            if(task != null){
-                taskDispatcher.addTask(task);
+
+        if(tasks != null){
+            for (StartTask task : tasks) {
+                if(task != null){
+                    taskDispatcher.addTask(task);
+                }
             }
+        }else {
+            Log.v("start","tasks is 0");
         }
-        for (StartTask task : tasks) {
-            if(task != null){
-                taskDispatcher.addTask(task);
-            }
-        }
+
     }
 
     static void fillCallbacks2(Context context){
@@ -99,7 +105,10 @@ public class AppStartUpUtil {
                         Class clazz = Class.forName(startupclass);
                         Object o = clazz.newInstance();
                         if(o instanceof AppStartUpCallback){
-                            callbacks.add((AppStartUpCallback) o);
+                            AppStartUpCallback callback = (AppStartUpCallback) o;
+                            //这里加上aop日志
+
+                            callbacks.add(callback);
                         }else {
                             Log.w("startup",startupclass +" not instanceof AppStartUpCallback");
                         }

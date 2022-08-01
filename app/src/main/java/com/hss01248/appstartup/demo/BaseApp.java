@@ -8,6 +8,9 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ProcessUtils;
 import com.blankj.utilcode.util.Utils;
 import com.hss01248.appstartup.api.AppStartUpUtil;
+import com.hss01248.appstartup.demo.tasks.BgTask;
+import com.hss01248.appstartup.demo.tasks.CpuTask;
+import com.hss01248.appstartup.demo.tasks.MainTask;
 
 /**
  * @Despciption todo
@@ -33,7 +36,9 @@ public class BaseApp extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         LogUtils.i("onCreate",this, ProcessUtils.getCurrentProcessName());
-        AppStartUpUtil.addStartTaskToApplicationOnCreate(null);
+        AppStartUpUtil.addStartTaskToApplicationOnCreate(new CpuTask(this));
+        AppStartUpUtil.addStartTaskToApplicationOnCreate(new MainTask(this));
+        AppStartUpUtil.addStartTaskToApplicationOnCreate(new BgTask(this));
         AppStartUpUtil.onApplicationOnCreate(this,BuildConfig.DEBUG);
     }
 
