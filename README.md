@@ -122,7 +122,7 @@ public class MyStartup3 implements AppStartUpCallback {
                 //java apt
 //Users/hss/github2/AppStartUpDemo/testlib/build/intermediates/javac/debug/classes/xxx
                 //kotlin apt
-//Users/hss/aku/module-offline-pay/Module-Offline-Pay/build/tmp/kapt3/classes/debug/xxx
+//Users/hss/xxx/module-offline-pay/Module-Offline-Pay/build/tmp/kapt3/classes/debug/xxx
                 int idx = temFilePath.indexOf("/build/intermediates/");
                 if(idx < 0){
                     idx = temFilePath.indexOf("/build/tmp/");

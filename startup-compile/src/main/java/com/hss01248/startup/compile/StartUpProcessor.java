@@ -75,7 +75,7 @@ public class StartUpProcessor extends AbstractProcessor {
                 //java apt
                 ///Users/hss/github2/AppStartUpDemo/testlib/build/intermediates/javac/debug/classes/com.hss01248.startup.testlib.MyStartup3
                 //kotlin apt
-                ///Users/hss/aku/module-offline-pay/Module-Offline-Pay/build/tmp/kapt3/classes/debug/
+                ///Users/hss/xx/module-offline-pay/Module-Offline-Pay/build/tmp/kapt3/classes/debug/
                 int idx = temFilePath.indexOf("/build/intermediates/");
                 if(idx < 0){
                     idx = temFilePath.indexOf("/build/tmp/");
