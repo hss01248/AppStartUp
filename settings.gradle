@@ -7,3 +7,7 @@ rootProject.name = "AppStartUpDemo"
 include ':testlib'
 include ':test-kotlin'
 include ':loginStatus'
+include ':classNameToAssets-base-compiler'
+include ':classNameToAssets-base-api'
+include ':test-compiler'
+include ':test-annotation'

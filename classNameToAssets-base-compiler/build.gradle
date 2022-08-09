@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+dependencies {
+    // AutoService相关
+    implementation 'com.google.auto.service:auto-service:1.0'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0'
+    implementation 'com.google.auto:auto-common:1.0'
+    //AutoService 主要的作用是注解 processor 类，并对其生成 META-INF 的配置信息。
+    // implementation 'com.google.auto.service:auto-service:1.0-rc6'
+    //解决gradle的版本bug，不添加会导致我们的process类不被调用
+    // annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
+   //implementation project(path: ':startup-annotation')
+
+}

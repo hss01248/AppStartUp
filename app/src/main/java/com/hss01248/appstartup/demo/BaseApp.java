@@ -11,6 +11,10 @@ import com.hss01248.appstartup.api.AppStartUpUtil;
 import com.hss01248.appstartup.demo.tasks.BgTask;
 import com.hss01248.appstartup.demo.tasks.CpuTask;
 import com.hss01248.appstartup.demo.tasks.MainTask;
+import com.hss01248.classnametoassets.base.compiler.AssetsReadUtil;
+import com.hss01248.test_annotation.AppStartUpItem3333;
+
+import java.util.List;
 
 /**
  * @Despciption todo
@@ -39,7 +43,10 @@ public class BaseApp extends MultiDexApplication {
         AppStartUpUtil.addStartTaskToApplicationOnCreate(new CpuTask(this));
         AppStartUpUtil.addStartTaskToApplicationOnCreate(new MainTask(this));
         AppStartUpUtil.addStartTaskToApplicationOnCreate(new BgTask(this));
-        AppStartUpUtil.onApplicationOnCreate(this,BuildConfig.DEBUG);
+       // AppStartUpUtil.onApplicationOnCreate(this,BuildConfig.DEBUG);
+
+        List<String> classes = AssetsReadUtil.findClasses(this, AppStartUpItem3333.class);
+        LogUtils.w("classes of AppStartUpItem3333",classes);
     }
 
     //ActivityThread: finishPreloaded preloadStatus 0

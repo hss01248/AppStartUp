@@ -35,4 +35,6 @@ dependencies {
 
     api project(":startup-api")
     annotationProcessor project(":startup-compile")
+    api project(":test-annotation")
+    annotationProcessor project(":test-compiler")
 }
