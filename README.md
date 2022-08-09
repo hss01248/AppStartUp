@@ -137,3 +137,10 @@ public class MyStartup3 implements AppStartUpCallback {
 https://blog.csdn.net/wangbaochu/article/details/52042926
 
 # todo: 使用注解处理器实现依赖注入功能-findbyType
+
+
+
+
+
+# 通用注解处理器: 将注解类全路径写到assets文件夹下
+
