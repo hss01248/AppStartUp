@@ -144,3 +144,21 @@ https://blog.csdn.net/wangbaochu/article/details/52042926
 
 # 通用注解处理器: 将注解类全路径写到assets文件夹下
 
+
+
+gradle
+
+```groovy
+com.github.hss01248.AppStartUp:startup-annotation:1.1.0
+com.github.hss01248.AppStartUp:test-annotation:1.1.0
+com.github.hss01248.AppStartUp:startup-api:1.1.0
+com.github.hss01248.AppStartUp:startup-compile:1.1.0
+com.github.hss01248.AppStartUp:loginStatus:1.1.0
+com.github.hss01248.AppStartUp:test-compiler:1.1.0
+com.github.hss01248.AppStartUp:classNameToAssets-base-api:1.1.0
+com.github.hss01248.AppStartUp:testlib:1.1.0
+com.github.hss01248.AppStartUp:classNameToAssets-base-compiler:1.1.0
+com.github.hss01248.AppStartUp:startup-tasks:1.1.0
+com.github.hss01248.AppStartUp:test-kotlin:1.1.0
+```
+
