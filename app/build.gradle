@@ -49,5 +49,7 @@ dependencies {
     implementation project(path: ':test-annotation')
     implementation project(path: ':classNameToAssets-base-api')
 
+    implementation project(":android-spis")
+
 
 }

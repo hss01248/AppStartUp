@@ -7,6 +7,8 @@ import androidx.multidex.MultiDexApplication;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ProcessUtils;
 import com.blankj.utilcode.util.Utils;
+import com.hss01248.android.spi.AndroidSpisReadUtil;
+import com.hss01248.appstartup.api.AppStartUpCallback;
 import com.hss01248.appstartup.api.AppStartUpUtil;
 import com.hss01248.appstartup.demo.tasks.BgTask;
 import com.hss01248.appstartup.demo.tasks.CpuTask;
@@ -47,6 +49,8 @@ public class BaseApp extends MultiDexApplication {
 
         List<String> classes = AssetsReadUtil.findClasses(this, AppStartUpItem3333.class);
         LogUtils.w("classes of AppStartUpItem3333",classes);
+
+        AndroidSpisReadUtil.findClasses(this, AppStartUpCallback.class);
     }
 
     //ActivityThread: finishPreloaded preloadStatus 0
