@@ -64,6 +64,8 @@ public abstract class AbstractWriteClassNamesToAssetsProcessor extends AbstractP
         for (Element element : elements) {
             TypeElement typeElement = (TypeElement) element;
             Name name = typeElement.getQualifiedName();
+            //typeElement.getInterfaces()
+            //typeElement.getSuperclass();
             System.out.println(getLogTag()+"--------->:  classname " + typeElement);
             classNames.add(name.toString());
 
